@@ -1,0 +1,58 @@
+name: Workflow 2 - Multi-Platform Testing
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  ubuntu-job:
+    name: Ubuntu Job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step 1 - Checkout code
+        uses: actions/checkout@v4
+
+      - name: Step 2 - Show OS info (Linux)
+        run: |
+          echo "Runner OS: $RUNNER_OS"
+          uname -a
+
+      - name: Step 3 - Create file and show contents
+        run: |
+          echo "Hello from Ubuntu runner!" > os-test.txt
+          cat os-test.txt
+
+  macos-job:
+    name: macOS Job
+    runs-on: macos-latest
+    steps:
+      - name: Step 1 - Checkout code
+        uses: actions/checkout@v4
+
+      - name: Step 2 - Show OS info (macOS)
+        run: |
+          echo "Runner OS: $RUNNER_OS"
+          uname -a
+
+      - name: Step 3 - Create file and show contents
+        run: |
+          echo "Hello from macOS runner!" > os-test.txt
+          cat os-test.txt
+
+  windows-job:
+    name: Windows Job
+    runs-on: windows-latest
+    steps:
+      - name: Step 1 - Checkout code
+        uses: actions/checkout@v4
+
+      - name: Step 2 - Show OS info (Windows)
+        run: |
+          echo "Runner OS: $env:RUNNER_OS"
+          systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
+
+      - name: Step 3 - Create file and show contents
+        run: |
+          "Hello from Windows runner!" | Out-File -FilePath os-test.txt
+          Get-Content os-test.txt
